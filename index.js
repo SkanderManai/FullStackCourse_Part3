@@ -3,7 +3,7 @@ const app = express();
 
 app.use(express.json());
 
-const persons = [
+let persons = [
   {
     id: 1,
     name: "Arto Hellas",
@@ -32,6 +32,14 @@ app.get("/", (request, response) => {
 
 app.get("/api/persons", (request, response) => {
   response.json(persons);
+});
+
+app.get("/info", (request, response) => {
+  let currentDate = new Date();
+
+  response.send(
+    `<div>Phonebook has info on ${persons.length} people <br/> ${currentDate} </div>`
+  );
 });
 
 const PORT = 3001;
