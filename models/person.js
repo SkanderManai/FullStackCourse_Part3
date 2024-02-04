@@ -12,9 +12,24 @@ mongoose
     console.log("error connecting to database: ", error.message);
   });
 
+const numberValidator = (number) => {
+  let regex1 = /\d\d-[0-9]+/i;
+  let regex2 = /\d\d\d-[0-9]+/i;
+  return regex1.test(number) || regex2.test(number);
+};
+
 const personSchema = new mongoose.Schema({
-  name: String,
-  number: String,
+  name: {
+    type: String,
+    minLength: 3,
+    required: true,
+  },
+  number: {
+    type: String,
+    minLength: 8,
+    validate: [numberValidator, "This number is not of the correct format"],
+    required: true,
+  },
 });
 
 personSchema.set("toJSON", {
